@@ -1,8 +1,8 @@
 package fuzs.deathcompass.world.entity.player;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.Level;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public interface PlayerDeathTracker {
     default boolean hasLastDeathData() {
@@ -11,17 +11,17 @@ public interface PlayerDeathTracker {
 
     BlockPos getLastDeathPosition();
 
-    ResourceKey<Level> getLastDeathDimension();
+    RegistryKey<World> getLastDeathDimension();
 
     long getLastDeathDate();
 
     void setLastDeathPosition(BlockPos lastDeathPosition);
 
-    void setLastDeathDimension(ResourceKey<Level> lastDeathDimension);
+    void setLastDeathDimension(RegistryKey<World> lastDeathDimension);
 
     void setLastDeathDate(long lastDeathDate);
 
-    static void saveLastDeathData(PlayerDeathTracker player, BlockPos pos, ResourceKey<Level> dimension) {
+    static void saveLastDeathData(PlayerDeathTracker player, BlockPos pos, RegistryKey<World> dimension) {
         player.setLastDeathPosition(pos);
         player.setLastDeathDimension(dimension);
         player.setLastDeathDate(System.currentTimeMillis());

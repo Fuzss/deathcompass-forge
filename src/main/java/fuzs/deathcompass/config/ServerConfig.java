@@ -1,7 +1,7 @@
 package fuzs.deathcompass.config;
 
-import fuzs.puzzleslib.config.AbstractConfig;
-import fuzs.puzzleslib.config.annotation.Config;
+import fuzs.puzzleslib.config.v2.AbstractConfig;
+import fuzs.puzzleslib.config.v2.annotation.Config;
 
 public class ServerConfig extends AbstractConfig {
     @Config(description = "Give death compass even when gamerule \"keepInventory\" is enabled.")
