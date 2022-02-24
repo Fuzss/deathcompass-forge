@@ -5,7 +5,6 @@
   "package": "fuzs.deathcompass.mixin",
   "refmap": "META-INF/deathcompass.refmap.json",
   "mixins": [
-    "ServerPlayerMixin"
   ],
   "client": [
   ],

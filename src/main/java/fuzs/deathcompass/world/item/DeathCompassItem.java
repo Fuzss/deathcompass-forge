@@ -1,7 +1,7 @@
 package fuzs.deathcompass.world.item;
 
+import fuzs.deathcompass.capability.DeathTrackerCapability;
 import fuzs.deathcompass.registry.ModRegistry;
-import fuzs.deathcompass.world.entity.player.PlayerDeathTracker;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +20,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -69,14 +70,17 @@ public class DeathCompassItem extends Item implements Vanishable {
    }
 
    public static Optional<ItemStack> createDeathCompass(Player player) {
-      PlayerDeathTracker tracker = (PlayerDeathTracker) player;
-      if (tracker.hasLastDeathData()) {
-         ItemStack itemstack = new ItemStack(ModRegistry.DEATH_COMPASS_ITEM.get(), 1);
-         itemstack.setHoverName(new TranslatableComponent("item.deathcompass.death_compass").append(new TranslatableComponent("item.deathcompass.death_compass.player", player.getDisplayName())));
-         CompoundTag compoundtag = itemstack.hasTag() ? itemstack.getTag() : new CompoundTag();
-         itemstack.setTag(compoundtag);
-         addLastDeathTags(tracker.getLastDeathDimension(), tracker.getLastDeathPosition(), tracker.getLastDeathDate(), compoundtag);
-         return Optional.of(itemstack);
+      LazyOptional<DeathTrackerCapability> optional = player.getCapability(ModRegistry.DEATH_TRACKER_CAPABILITY);
+      if (optional.isPresent()) {
+         DeathTrackerCapability capability = optional.orElseThrow(IllegalStateException::new);
+         if (capability.hasLastDeathData()) {
+            ItemStack itemstack = new ItemStack(ModRegistry.DEATH_COMPASS_ITEM.get(), 1);
+            itemstack.setHoverName(new TranslatableComponent("item.deathcompass.death_compass").append(new TranslatableComponent("item.deathcompass.death_compass.player", player.getDisplayName())));
+            CompoundTag compoundtag = itemstack.hasTag() ? itemstack.getTag() : new CompoundTag();
+            itemstack.setTag(compoundtag);
+            addLastDeathTags(capability.getLastDeathDimension(), capability.getLastDeathPosition(), capability.getLastDeathDate(), compoundtag);
+            return Optional.of(itemstack);
+         }
       }
       return Optional.empty();
    }
