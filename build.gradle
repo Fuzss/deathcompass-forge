@@ -82,9 +82,9 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // don't enable these for puzzles, they'll be forced upon all dependencies then via maven
-    runtimeOnly fg.deobf("curse.maven:catalogue-459701:3543625")
-    runtimeOnly fg.deobf("curse.maven:bettermodsbutton-541584:3548185")
-    runtimeOnly fg.deobf("curse.maven:configmenusforge-544048:3548199")
+    runtimeOnly fg.deobf("curse.maven:catalogue-459701:3559402")
+    runtimeOnly fg.deobf("curse.maven:bettermodsbutton-541584:3671308")
+    runtimeOnly fg.deobf("curse.maven:configmenusforge-544048:3671318")
 
     // from local maven, those builds are not obfuscated
     implementation fg.deobf("fuzs.puzzleslib:PuzzlesLib:${puzzlesVersion}")
@@ -93,9 +93,9 @@ dependencies {
 //    implementation fg.deobf("curse.maven:puzzles-lib:<file-id>")
 }
 
-mixin {
-    add sourceSets.main, "META-INF/${project.modid}.refmap.json"
-}
+//mixin {
+//    add sourceSets.main, "META-INF/${project.modid}.refmap.json"
+//}
 
 processResources {
     duplicatesStrategy DuplicatesStrategy.INCLUDE
@@ -153,7 +153,7 @@ ext.jarAttributes = [
         "Implementation-Vendor-Id"  : project.group,
         "Implementation-URL"        : "${modPageUrl}",
         "Implementation-Timestamp"  : new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-        "MixinConfigs"              : "META-INF/${project.modid}.mixins.json"
+//        "MixinConfigs"              : "META-INF/${project.modid}.mixins.json"
 ]
 
 def createJarTask(def name, def type, def sources) {
